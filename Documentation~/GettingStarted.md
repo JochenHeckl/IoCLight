@@ -3,7 +3,7 @@
 - Create an empty GameObject and rename it Bootstrap
 - Create a new script named ExampleBootstrap. Derive your script from BootstrapBase.
 
-```c# 
+```cs 
 
 public interface ISimpleInterface
 {
@@ -45,4 +45,4 @@ public class ExampleBootstrap : BootstrapBase
         var simpleValue = Container.Resolve<ISimpleInterface>().SimpleProperty;
     }
 }
-```c#
+```
