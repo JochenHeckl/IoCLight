@@ -1,0 +1,23 @@
+{
+  "name": "de.jochenheckl.ioclight",
+  "version": "1.0.0",
+  "displayName": "IoCLight",
+  "description": "A minimal IoC container. Designed to work with il2cpp.",
+  "unity": "2019.3",
+  "keywords": [
+    "IoC",
+    "IoC Container",
+    "Inversion of Control",
+    "Dependency Injection",
+    "SOLID"
+  ],
+  "author": {
+    "name": "Jochen Heckl",
+    "email": "jochen.heckl@gmail.com",
+    "url": "http://jochen.heckl.de"
+  },
+  "type": "library",
+  "dependencies": {
+    "com.unity.test-framework": "1.1.8"
+  }
+}
