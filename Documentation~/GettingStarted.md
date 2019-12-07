@@ -1,5 +1,9 @@
 # Getting Started
 
+## Prerequisites
+
+This getting started guide will assume basic knowledge of Unity 2019.3 as well as basic understanding of the Inversion of Control principle.
+
 ## Add A Reference to IoCLight
 
 *either* manually:
@@ -10,17 +14,28 @@
 *or* via UI:
 - Open the package manager window in unity
 - Click the + button and choose "Add package from git URL..."
-![Add package from git URL 01] (AddPackageFromGit01.png)
+
+![Add package from git URL 01](GettingStarted/AddPackageFromGit01.png)
+
 - Insert `https://github.com/JochenHeckl/IoCLight.git` into the edit field
-![Add package from git URL 02] (AddPackageFromGit02.png)
+
+![Add package from git URL 02](GettingStarted/AddPackageFromGit02.png)
+
 - Click the Add button and wait for the project to import
-![IoCLight package installed] (IoCLight installed.png)
+
+![IoCLight package installed](GettingStarted/IoCLightInstalled.png)
 
 
 ## Start using IoCLight
 - Open a new scene.
 - Create an empty GameObject and rename it Bootstrap
-- Create a new script named ExampleBootstrap. Derive class ExampleBootstrap from BootstrapBase.
+- Create a new script named ExampleBootstrap.
+- Derive class ExampleBootstrap from BootstrapBase.
+- Implement the abstract base method `void Compose()`.
+- Use `Container.Register()` to bootstrap your IoC Container.
+
+
+
 
 
 ## Simple Example the covers a lot of basic use cases
@@ -65,7 +80,7 @@ public class ExampleBootstrap : BootstrapBase
 		// ISimpleInterface will resolve to SimpleType.
 		// SimpleType's dependency to ISimpleTypeDependency will be resolved automatically.
 
-        var simpleValue = Container.Resolve<ISimpleInterface>().SimpleProperty;
+		var simpleValue = Container.Resolve<ISimpleInterface>().SimpleProperty;
 
 		// simpleValue is now 42.
     }

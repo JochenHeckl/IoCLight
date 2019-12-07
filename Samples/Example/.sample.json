@@ -1,5 +1,0 @@
-{
-	"displayname" : "Example",
-	"description" : "This is a simple exmaple scene that demontrates how to bootstrap the IoC Container.",
-	"createseparatePackage": false
-}

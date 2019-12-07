@@ -1,6 +1,6 @@
 {
   "name": "de.jochenheckl.ioclight",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
   "unity": "2019.3",
@@ -18,6 +18,18 @@
   },
   "type": "library",
   "dependencies": {
-    "com.unity.test-framework":"1.1.8"
-  }
+    "com.unity.test-framework": "1.1.8"
+  },
+  "samples": [
+    {
+      "displayName": "ColorSwitcher",
+      "description": "A Simple Example that registers and resolves a color switcher that will supply a new color for a cube.",
+      "path": "Samples~/ColorSwitcher"
+    },
+    {
+      "displayName": "Bootstrap MainLoop",
+      "description": "A starting point for a IoC Container based project. Installs basic bootstrapper that will drive a main loop.",
+      "path": "Samples~/Bootstrap MainLoop"
+    }
+  ]
 }

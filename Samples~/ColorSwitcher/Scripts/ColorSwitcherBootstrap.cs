@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using IoCLight;
 using UnityEngine;
 
-public class ExampleBootstrap : BootstrapBase
+public class ColorSwitcherBootstrap : BootstrapBase
 {
     public Material material;
 
     public override void Compose()
     {
-        container.Register<ColorSwitcher>().SingleInstance();
+        Container.Register<ColorSwitcher>().SingleInstance();
     }
 
     public void Update()
