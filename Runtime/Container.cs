@@ -21,19 +21,33 @@ namespace IoCLight
             return binding;
         }
 
-        public InstanceBinding<InstanceType> RegisterInstance<InstanceType>( InstanceType instance )
+        public ITypeBinding RegisterInstance<InstanceType>( InstanceType instance )
         {
-            return new InstanceBinding<InstanceType>( instance );
+            var binding = new TypeBindingBase( instance )
+            {
+                SingleInstance = true,
+                LookupType = typeof( InstanceType ),
+                ResolveType = typeof( InstanceType )
+            };
+
+            typeBindings.Add( binding );
+
+            return binding;
         }
 
-        public InstanceType Resolve<InstanceType>()
+        public InstanceType Resolve<InstanceType>() where InstanceType : class
         {
             return typeBindings.First( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) ).Resolve<InstanceType>( this );
         }
 
-        public InstanceType Resolve<InstanceType>( Type typeofInstanceType )
+        public object Resolve( Type typeofInstanceType )
         {
-            return Resolve<InstanceType>();
+            return typeBindings.First( x => typeofInstanceType.IsAssignableFrom( x.LookupType ) ).Resolve( this );
+        }
+
+        public void Terminate()
+        {
+            typeBindings.Clear();
         }
     }
 }

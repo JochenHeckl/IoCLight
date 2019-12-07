@@ -8,15 +8,16 @@ namespace IoCLight
 { 
     public static class ContainerExtensions
     {
-        public static TypeBindingBase As<LookupType>( this TypeBindingBase binding )
+        public static ITypeBinding As<LookupType>( this ITypeBinding binding )
         {
             binding.LookupType = typeof( LookupType );
             return binding;
         }
 
-        public static TypeBindingBase SingleInstance( this TypeBindingBase binding )
+        public static ITypeBinding SingleInstance( this ITypeBinding binding )
         {
-            throw new NotImplementedException();
+            binding.SingleInstance = true;
+            return binding;
         }
     }
 }

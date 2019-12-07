@@ -4,9 +4,12 @@ namespace IoCLight
 {
     public interface ITypeBinding
     {
-        Type LookupType { get; }
+        bool SingleInstance { get; set; }
+        Type LookupType { get; set; }
         Type ResolveType { get; }
 
-        TypeToResolve Resolve<TypeToResolve>( IContainer container );
+        object Resolve( IContainer container );
+        TypeToResolve Resolve<TypeToResolve>( IContainer container ) where TypeToResolve : class;
+
     }
 }

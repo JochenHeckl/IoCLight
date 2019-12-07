@@ -4,10 +4,12 @@ namespace IoCLight
 {
     public interface IContainer
     {
-        InstanceType Resolve<InstanceType>();
-        InstanceType Resolve<InstanceType>( Type typeofInstanceType );
+        void Terminate();
 
         TypeBindingBase Register<InstanceType>();
-        InstanceBinding<InstanceType> RegisterInstance<InstanceType>( InstanceType instance );
+        ITypeBinding RegisterInstance<InstanceType>( InstanceType instance );
+
+        InstanceType Resolve<InstanceType>() where InstanceType : class;
+        object Resolve( Type typeofInstanceType );
     }
 }

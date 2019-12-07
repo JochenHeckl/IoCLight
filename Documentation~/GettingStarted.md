@@ -1,10 +1,30 @@
 # Getting Started
+
+## Add A Reference to IoCLight
+
+*either* manually:
+- Open *manifest.json* in a text editor. You can find the file in the *Packages* directory of your current project
+- Add the line `"de.jochenheckl.ioclight":"https://github.com/JochenHeckl/IoCLight.git"` to the "dependencies" section.
+- Save the file and return to unity
+
+*or* via UI:
+- Open the package manager window in unity
+- Click the + button and choose "Add package from git URL..."
+![Add package from git URL 01] (AddPackageFromGit01.png)
+- Insert `https://github.com/JochenHeckl/IoCLight.git` into the edit field
+![Add package from git URL 02] (AddPackageFromGit02.png)
+- Click the Add button and wait for the project to import
+![IoCLight package installed] (IoCLight installed.png)
+
+
+## Start using IoCLight
 - Open a new scene.
 - Create an empty GameObject and rename it Bootstrap
-- Create a new script named ExampleBootstrap. Derive your script from BootstrapBase.
+- Create a new script named ExampleBootstrap. Derive class ExampleBootstrap from BootstrapBase.
 
+
+## Simple Example the covers a lot of basic use cases
 ```cs 
-
 public interface ISimpleInterface
 {
 	int SimpleProperty { get; }
@@ -34,15 +54,20 @@ public class SimpleType : ISimpleInterface
 
 public class ExampleBootstrap : BootstrapBase
 {
-    override void Compose( IContainer container )
+    override void Compose()
     {
-        container.Register<SimpleTypeDependency>().As<ISimpleTypeDependency>();
-		container.Register<SimpleType>().As<ISimpleInterface>();
+        Container.Register<SimpleTypeDependency>().As<ISimpleTypeDependency>();
+		Container.Register<SimpleType>().As<ISimpleInterface>();
     }
 
     public void Start()
     {
+		// ISimpleInterface will resolve to SimpleType.
+		// SimpleType's dependency to ISimpleTypeDependency will be resolved automatically.
+
         var simpleValue = Container.Resolve<ISimpleInterface>().SimpleProperty;
+
+		// simpleValue is now 42.
     }
 }
 ```

@@ -7,9 +7,9 @@ public class ExampleBootstrap : BootstrapBase
 {
     public Material material;
 
-    public override void Compose( IContainer container )
+    public override void Compose()
     {
-        container.Register<ColorSwitcher>();
+        container.Register<ColorSwitcher>().SingleInstance();
     }
 
     public void Update()

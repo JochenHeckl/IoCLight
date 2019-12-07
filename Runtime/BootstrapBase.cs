@@ -6,17 +6,17 @@ namespace IoCLight
     {
         public Container Container { get; private set; }
 
-        public abstract void Compose( IContainer container );
+        public abstract void Compose();
 
         public virtual void Awake()
         {
             Container = new Container();
-
-            Compose( Container );
+            Compose();
         }
 
         public virtual void OnDestroy()
         {
+            Container.Terminate();
             Container = null;
         }
     }
