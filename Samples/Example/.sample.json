@@ -1,5 +1,5 @@
 {
 	"displayname" : "Example",
-	"description" : "This is a simple exmaple scene that demontrates how to bootstrap the IoC Container.",
-	"createseparatePackage": false
+	"description" : "This is a simple example scene that demonstrates how to bootstrap the IoC Container.",
+	"createseparatePackage": true
 }
