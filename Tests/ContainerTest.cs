@@ -29,6 +29,11 @@ namespace IoCLight.Test
             public int SimpleProperty { get { return 42; } }
         }
 
+        public class AnOtherSimpleType : ISimpleInterface
+        {
+            public int SimpleProperty { get { return 21; } }
+        }
+
         public interface ISimpleTypeDependency
         {
             int SimpleProperty { get; }
@@ -112,6 +117,18 @@ namespace IoCLight.Test
             Assert.AreEqual(
                 container.Resolve<ISimpleInterface>().GetHashCode(),
                 container.Resolve<ISimpleInterface>().GetHashCode() );
+        }
+
+
+        [Test]
+        public void TestMultipleInstances()
+        {
+            var container = new Container();
+
+            container.Register<SimpleType>().As<ISimpleInterface>();
+            container.Register<AnOtherSimpleType>().As<ISimpleInterface>();
+
+            Assert.AreEqual( container.ResolveAll<ISimpleInterface>().Length, 2 );
         }
     }
 }

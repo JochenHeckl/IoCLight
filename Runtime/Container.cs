@@ -40,6 +40,14 @@ namespace IoCLight
             return typeBindings.First( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) ).Resolve<InstanceType>( this );
         }
 
+        public InstanceType[] ResolveAll<InstanceType>() where InstanceType : class
+        {
+            return typeBindings
+                .Where( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) )
+                .Select( x => x.Resolve<InstanceType>( this ) )
+                .ToArray();
+        }
+
         public object Resolve( Type typeofInstanceType )
         {
             return typeBindings.First( x => typeofInstanceType.IsAssignableFrom( x.LookupType ) ).Resolve( this );

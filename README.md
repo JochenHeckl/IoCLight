@@ -4,6 +4,7 @@ IoCLight is a minimal IoC Container for the [Unity](https://unity.com/) Game Eng
 Find the [Quick Start Guide](https://github.com/JochenHeckl/IoCLight/blob/master/Documentation~/GettingStarted.md) here;
 
 Motivation:
+
 I found Inversion of Control Containers to be a very simple to apply, yet effective, way to keep code structured and clean.
 I'm used to tools like Autofac, Ninject, Unity (The IoC Container) and alike, and I used them heavily in the past.
 

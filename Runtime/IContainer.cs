@@ -10,6 +10,8 @@ namespace IoCLight
         ITypeBinding RegisterInstance<InstanceType>( InstanceType instance );
 
         InstanceType Resolve<InstanceType>() where InstanceType : class;
+        InstanceType[] ResolveAll<InstanceType>() where InstanceType : class;
+
         object Resolve( Type typeofInstanceType );
     }
 }
