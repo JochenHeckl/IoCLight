@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 
-namespace IoCLight.Test
+namespace de.JochenHeckl.IoCLight.Test
 {
     public class ContainerTest
     {

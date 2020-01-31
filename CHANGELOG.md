@@ -1,3 +1,5 @@
+## [1.2.1] - 2020-01-31
+changed namespace to de.JochenHeckl.IoCLight
 ## [1.2.0] - 2019-12-07
 Added Bootstrap MainLoop Example
 ## [1.1.0] - 2019-12-07

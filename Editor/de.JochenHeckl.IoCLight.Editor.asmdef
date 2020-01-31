@@ -1,9 +1,7 @@
 {
-    "name": "IoCLight.Tests",
+    "name": "de.JochenHeckl.IoCLight.Editor",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "IoCLight"
+        "GUID:988fa01430d4f4948924dbb8e49c3259"
     ],
     "includePlatforms": [
         "Editor"
@@ -11,13 +9,9 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [
-        "nunit.framework.dll"
-    ],
+    "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

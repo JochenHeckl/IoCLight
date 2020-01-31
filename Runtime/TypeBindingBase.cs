@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace IoCLight
+namespace de.JochenHeckl.IoCLight
 {
     public class TypeBindingBase : ITypeBinding
     {

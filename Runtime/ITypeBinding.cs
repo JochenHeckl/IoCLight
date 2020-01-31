@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IoCLight
+namespace de.JochenHeckl.IoCLight
 {
     public interface ITypeBinding
     {
