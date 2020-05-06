@@ -20,6 +20,8 @@ namespace ReplaceMeWithYourProjectsNamespace
         public void UpdateSimulation( float deltaTimeSec )
         {
             runtimeData.SimulationTimeSec += timeLapse.ToSimulationTime( deltaTimeSec );
+            
+            Debug.Log( $"Updating Main Loop : SimulationTime is {runtimeData.SimulationTimeSec:0.000} sec. " );
         }
     }
 }
