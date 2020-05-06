@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using IoCLight;
+using de.JochenHeckl.IoCLight;
 using UnityEngine;
 
 public class ColorSwitcherBootstrap : BootstrapBase
