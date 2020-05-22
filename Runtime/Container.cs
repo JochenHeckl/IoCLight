@@ -48,9 +48,16 @@ namespace de.JochenHeckl.IoCLight
                 .ToArray();
         }
 
-        public object Resolve( Type typeofInstanceType )
+        public object Resolve( Type typeOfInstanceType )
         {
-            return typeBindings.First( x => typeofInstanceType.IsAssignableFrom( x.LookupType ) ).Resolve( this );
+            var typeBinding = typeBindings.FirstOrDefault( x => typeOfInstanceType.IsAssignableFrom( x.LookupType ) );
+
+            if (typeBinding == null)
+            {
+                throw new InvalidOperationException( $"Failed to resolve type {typeOfInstanceType}. Make sure you registered {typeOfInstanceType.Name} with your container?" );
+            }
+
+            return typeBinding.Resolve( this );
         }
 
         public void Terminate()
