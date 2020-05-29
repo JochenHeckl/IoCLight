@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace de.JochenHeckl.IoCLight
+namespace de.JochenHeckl.Unity.IoCLight
 {
     public class Container : IContainer
     {

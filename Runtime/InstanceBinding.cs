@@ -1,4 +1,4 @@
-﻿namespace de.JochenHeckl.IoCLight
+﻿namespace de.JochenHeckl.Unity.IoCLight
 {
     public class InstanceBinding<InstanceType> : TypeBindingBase
     {

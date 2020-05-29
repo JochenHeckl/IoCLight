@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace de.JochenHeckl.IoCLight
+namespace de.JochenHeckl.Unity.IoCLight
 {
     public abstract class BootstrapBase : MonoBehaviour
     {

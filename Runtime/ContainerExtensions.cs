@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace de.JochenHeckl.IoCLight
+namespace de.JochenHeckl.Unity.IoCLight
 { 
     public static class ContainerExtensions
     {
