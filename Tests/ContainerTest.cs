@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace de.JochenHeckl.IoCLight.Test
+namespace de.JochenHeckl.Unity.IoCLight.Test
 {
     public class ContainerTest
     {
