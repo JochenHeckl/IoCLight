@@ -1,5 +1,5 @@
 {
-    "name": "de.JochenHeckl.IoCLight.Tests",
+    "name": "de.JochenHeckl.Unity.IoCLight.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

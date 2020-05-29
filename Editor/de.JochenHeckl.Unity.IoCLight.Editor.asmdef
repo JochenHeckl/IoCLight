@@ -1,5 +1,5 @@
 {
-    "name": "de.JochenHeckl.IoCLight.Editor",
+    "name": "de.JochenHeckl.Unity.IoCLight.Editor",
     "references": [
         "GUID:988fa01430d4f4948924dbb8e49c3259"
     ],
