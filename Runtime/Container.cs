@@ -37,7 +37,15 @@ namespace de.JochenHeckl.Unity.IoCLight
 
         public InstanceType Resolve<InstanceType>() where InstanceType : class
         {
-            return typeBindings.First( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) ).Resolve<InstanceType>( this );
+            var typeBinding = typeBindings.FirstOrDefault( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) );
+
+            if ( typeBinding == null )
+            {
+                throw new InvalidOperationException( $"Failed to resolve type {typeof(InstanceType)}." +
+					$" Make sure you registered  {typeof( InstanceType )} with your container?" );
+            }
+
+            return typeBinding.Resolve<InstanceType>( this );
         }
 
         public InstanceType[] ResolveAll<InstanceType>() where InstanceType : class
@@ -54,7 +62,8 @@ namespace de.JochenHeckl.Unity.IoCLight
 
             if (typeBinding == null)
             {
-                throw new InvalidOperationException( $"Failed to resolve type {typeOfInstanceType}. Make sure you registered {typeOfInstanceType.Name} with your container?" );
+                throw new InvalidOperationException( $"Failed to resolve type {typeOfInstanceType}." +
+					$" Make sure you registered {typeOfInstanceType} with your container?" );
             }
 
             return typeBinding.Resolve( this );
