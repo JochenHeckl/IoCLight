@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.4] - 2020-10-17
+### Added
+- Added a check to type registration.
+\
+Registering a type **T** `.As<I>()` an other type **I**, which is not assignable from the original type **T** will now throw an exception.
+\
+This should help pointing out the problems with forgotten interface declarations etc.
+
 ## [1.3.3] - 2020-05-29
 Changed root namespace and package name to de.JochenHeckl.Unity to unify with other packages
 
