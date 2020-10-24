@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added missing .meta files.
 
+### Fixed
+- Fixed broken namespaces in the bootstrap source files.
+
 
 ## [1.3.4] - 2020-10-17
 ### Added
