@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using de.JochenHeckl.IoCLight;
+using de.JochenHeckl.Unity.IoCLight;
 using UnityEngine;
 
 public class ColorSwitcherBootstrap : BootstrapBase
@@ -14,6 +14,6 @@ public class ColorSwitcherBootstrap : BootstrapBase
 
     public void Update()
     {
-        material.SetColor( "_Color", Container.Resolve<ColorSwitcher>().MakeNextColor( Time.time ) );
+        material.color = Container.Resolve<ColorSwitcher>().MakeNextColor( Time.time );
     }
 }

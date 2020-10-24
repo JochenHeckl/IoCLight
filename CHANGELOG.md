@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
+
+## [1.4.0] - 2020-10-24
+### Changed
+
+- Container Property of BootstrapBase from
+    ```csharp
+    public Container Container { get; private set; }
+    ```
+    to
+    ```csharp
+    public IContainer Container { get; private set; }
+    ```
+
+- The material of the ColorSwitcher example was upgraded to URP.
+
+### Added
+- Added missing .meta files.
+
+
 ## [1.3.4] - 2020-10-17
 ### Added
 - Added a check to type registration.

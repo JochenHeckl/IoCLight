@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using de.JochenHeckl.IoCLight;
+﻿using de.JochenHeckl.Unity.IoCLight;
+
 using UnityEngine;
 
 namespace ReplaceMeWithYourProjectsNamespace
 {
-    public class Bootstrap : BootstrapBase
+	public class Bootstrap : BootstrapBase
     {
         public TextAsset configuration;
 

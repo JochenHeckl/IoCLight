@@ -4,7 +4,7 @@ namespace de.JochenHeckl.Unity.IoCLight
 {
     public abstract class BootstrapBase : MonoBehaviour
     {
-        public Container Container { get; private set; }
+        public IContainer Container { get; private set; }
 
         public abstract void Compose();
 
