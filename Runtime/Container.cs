@@ -62,7 +62,7 @@ namespace de.JochenHeckl.Unity.IoCLight
 
             if (typeBinding == null)
             {
-                throw new InvalidOperationException( $"Failed to resolve type {typeOfInstanceType}." +
+                throw new InvalidOperationException( $"{typeOfInstanceType.Name} can not be resolved." +
 					$" Make sure you registered {typeOfInstanceType} with your container?" );
             }
 
