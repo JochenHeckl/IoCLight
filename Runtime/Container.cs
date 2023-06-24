@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using PlasticPipe.PlasticProtocol.Server;
+
 namespace de.JochenHeckl.Unity.IoCLight
 {
     public class Container : IContainer
     {
         private readonly List<ITypeBinding> typeBindings = new List<ITypeBinding>();
 
-        public TypeBindingBase Register<InstanceType>()
+        public Container() { 
+            RegisterInstance(this).As<IContainer>();
+        }
+
+        public ITypeBinding Register<InstanceType>()
         {
             var binding = new TypeBindingBase()
             {
@@ -35,7 +41,20 @@ namespace de.JochenHeckl.Unity.IoCLight
             return binding;
         }
 
-        public InstanceType Resolve<InstanceType>() where InstanceType : class
+		public ITypeBinding RegisterFactory<ProductType>( Func<IContainer, ProductType> producer )
+        {
+			var binding = new FactoryBinding<ProductType>( producer )
+			{
+				SingleInstance = false,
+				LookupType = typeof( ProductType )
+			};
+
+			typeBindings.Add( binding );
+
+			return binding;
+		}
+
+		public InstanceType Resolve<InstanceType>() where InstanceType : class
         {
             var typeBinding = typeBindings.FirstOrDefault( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) );
 
