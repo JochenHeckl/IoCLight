@@ -31,6 +31,11 @@
       "displayName": "Bootstrap MainLoop",
       "description": "A starting point for a IoC Container based project. Installs basic boot strapper that will drive a main loop.",
       "path": "Samples~/Bootstrap MainLoop"
+    },
+    {
+      "displayName": "IoCBehaviour",
+      "description": "Simple example of IoCBehaviour. A MonoBehaviour that can resolve dependencies.",
+      "path": "Samples~/IoCBehaviour"
     }
   ]
 }

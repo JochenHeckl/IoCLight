@@ -4,10 +4,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [2.0.0] - 2024-02-10
-
+- Main namespace was shortened to IoCLight
 - Register API changed to return ITypeBinding instead of TypeBindingBase
 - Adds new way of registering: ```public ITypeBinding RegisterFactory<ProductType>( Func<IContainer, ProductType> producer )```
-- Adds IoCBehaviour which enables resolving instances from within Monobehaviours
+- Adds IoCBehaviour which enables resolving instances from within MonoBehaviour
 - Other Minor Improvements
 
 ## [1.4.0] - 2020-10-24
