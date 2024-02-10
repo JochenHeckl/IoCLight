@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+
+using NUnit.Framework;
 using UnityEngine;
 
 
@@ -31,7 +33,12 @@ namespace de.JochenHeckl.Unity.IoCLight.Test
             public int SimpleProperty { get { return 21; } }
         }
 
-        public interface ISimpleTypeDependency
+		public class ASimpleContainerType 
+		{
+			public ISimpleInterface SimpleProperty { get; set; }
+		}
+
+		public interface ISimpleTypeDependency
         {
             int SimpleProperty { get; }
         }
@@ -127,5 +134,23 @@ namespace de.JochenHeckl.Unity.IoCLight.Test
 
             Assert.AreEqual( container.ResolveAll<ISimpleInterface>().Length, 2 );
         }
-    }
+
+		[Test]
+		public void TestFactoryResolve()
+		{
+			var container = new Container();
+
+			container.Register<SimpleType>().As<ISimpleInterface>();
+
+            container.RegisterFactory<ASimpleContainerType>( ( x ) => new ASimpleContainerType()
+			{
+				SimpleProperty = x.Resolve<ISimpleInterface>()
+			} );
+
+            var product = container.Resolve<ASimpleContainerType>();
+
+			Assert.NotNull( product );
+			Assert.NotNull( product.SimpleProperty );
+		}
+	}
 }

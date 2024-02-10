@@ -8,65 +8,93 @@ namespace de.JochenHeckl.Unity.IoCLight
     {
         private readonly List<ITypeBinding> typeBindings = new List<ITypeBinding>();
 
-        public TypeBindingBase Register<InstanceType>()
+        public Container()
+        {
+            RegisterInstance(this).As<IContainer>();
+        }
+
+        public ITypeBinding Register<InstanceType>()
         {
             var binding = new TypeBindingBase()
             {
-                LookupType = typeof( InstanceType ),
-                ResolveType = typeof( InstanceType )
+                LookupType = typeof(InstanceType),
+                ResolveType = typeof(InstanceType)
             };
 
-            typeBindings.Add( binding );
+            typeBindings.Add(binding);
 
             return binding;
         }
 
-        public ITypeBinding RegisterInstance<InstanceType>( InstanceType instance )
+        public ITypeBinding RegisterInstance<InstanceType>(InstanceType instance)
         {
-            var binding = new TypeBindingBase( instance )
+            var binding = new TypeBindingBase(instance)
             {
                 SingleInstance = true,
-                LookupType = typeof( InstanceType ),
-                ResolveType = typeof( InstanceType )
+                LookupType = typeof(InstanceType),
+                ResolveType = typeof(InstanceType)
             };
 
-            typeBindings.Add( binding );
+            typeBindings.Add(binding);
 
             return binding;
         }
 
-        public InstanceType Resolve<InstanceType>() where InstanceType : class
+        public ITypeBinding RegisterFactory<ProductType>(Func<IContainer, ProductType> producer)
         {
-            var typeBinding = typeBindings.FirstOrDefault( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) );
-
-            if ( typeBinding == null )
+            var binding = new FactoryBinding<ProductType>(producer)
             {
-                throw new InvalidOperationException( $"Failed to resolve type {typeof(InstanceType)}." +
-					$" Make sure you registered  {typeof( InstanceType )} with your container?" );
-            }
+                SingleInstance = false,
+                LookupType = typeof(ProductType)
+            };
 
-            return typeBinding.Resolve<InstanceType>( this );
+            typeBindings.Add(binding);
+
+            return binding;
         }
 
-        public InstanceType[] ResolveAll<InstanceType>() where InstanceType : class
+        public InstanceType Resolve<InstanceType>()
+            where InstanceType : class
         {
-            return typeBindings
-                .Where( x => typeof( InstanceType ).IsAssignableFrom( x.LookupType ) )
-                .Select( x => x.Resolve<InstanceType>( this ) )
-                .ToArray();
-        }
-
-        public object Resolve( Type typeOfInstanceType )
-        {
-            var typeBinding = typeBindings.FirstOrDefault( x => typeOfInstanceType.IsAssignableFrom( x.LookupType ) );
+            var typeBinding = typeBindings.FirstOrDefault(x =>
+                typeof(InstanceType).IsAssignableFrom(x.LookupType)
+            );
 
             if (typeBinding == null)
             {
-                throw new InvalidOperationException( $"{typeOfInstanceType.Name} can not be resolved." +
-					$" Make sure you registered {typeOfInstanceType} with your container?" );
+                throw new InvalidOperationException(
+                    $"Failed to resolve type {typeof(InstanceType)}."
+                        + $" Make sure you registered  {typeof(InstanceType)} with your container?"
+                );
             }
 
-            return typeBinding.Resolve( this );
+            return typeBinding.Resolve<InstanceType>(this);
+        }
+
+        public InstanceType[] ResolveAll<InstanceType>()
+            where InstanceType : class
+        {
+            return typeBindings
+                .Where(x => typeof(InstanceType).IsAssignableFrom(x.LookupType))
+                .Select(x => x.Resolve<InstanceType>(this))
+                .ToArray();
+        }
+
+        public object Resolve(Type typeOfInstanceType)
+        {
+            var typeBinding = typeBindings.FirstOrDefault(x =>
+                typeOfInstanceType.IsAssignableFrom(x.LookupType)
+            );
+
+            if (typeBinding == null)
+            {
+                throw new InvalidOperationException(
+                    $"{typeOfInstanceType.Name} can not be resolved."
+                        + $" Make sure you registered {typeOfInstanceType} with your container?"
+                );
+            }
+
+            return typeBinding.Resolve(this);
         }
 
         public void Terminate()
