@@ -1,7 +1,9 @@
 {
-    "name": "de.JochenHeckl.Unity.IoCLight",
-    "rootNamespace": "IoCLight",
-    "references": [],
+    "name": "IoCLight.Samples.IoCBehaviour",
+    "rootNamespace": "IoCLight.Samples.IoCBehaviour",
+    "references": [
+        "GUID:988fa01430d4f4948924dbb8e49c3259"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
