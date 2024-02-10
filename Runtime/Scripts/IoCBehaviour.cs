@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace de.JochenHeckl.Unity.IoCLight
+namespace IoCLight
 {
     public class IoCBehaviour : MonoBehaviour
     {

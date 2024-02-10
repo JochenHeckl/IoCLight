@@ -1,5 +1,6 @@
 {
     "name": "de.JochenHeckl.Unity.IoCLight.Tests",
+    "rootNamespace": "IoCLight.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

@@ -1,7 +1,6 @@
 ﻿using UnityEditor;
-using de.JochenHeckl.Unity.IoCLight;
 
-namespace de.JochenHeckl.Unity.IoCLight.Editor
+namespace IoCLight.Editor
 {
     [CustomEditor( typeof( BootstrapBase ) )]
     public class BootstrapBaseEditor : UnityEditor.Editor

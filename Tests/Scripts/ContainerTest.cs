@@ -1,8 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace de.JochenHeckl.Unity.IoCLight.Test
+namespace IoCLight.Test
 {
     public class ContainerTest
     {
@@ -154,7 +153,7 @@ namespace de.JochenHeckl.Unity.IoCLight.Test
 
             container.Register<SimpleType>().As<ISimpleInterface>();
 
-            container.RegisterFactory<ASimpleContainerType>(
+            container.RegisterFactory(
                 (x) => new ASimpleContainerType() { SimpleProperty = x.Resolve<ISimpleInterface>() }
             );
 

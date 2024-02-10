@@ -1,9 +1,9 @@
 {
   "name": "de.jochenheckl.unity.ioclight",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
-  "unity": "2019.3",
+  "unity": "2021.3",
   "keywords": [
     "SOLID",
     "IoC",
@@ -19,7 +19,7 @@
   },
   "type": "library",
   "dependencies": {
-    "com.unity.test-framework": "1.1.11"
+    "com.unity.test-framework": "1.4.3"
   },
   "samples": [
     {
@@ -29,8 +29,13 @@
     },
     {
       "displayName": "Bootstrap MainLoop",
-      "description": "A starting point for a IoC Container based project. Installs basic bootstrapper that will drive a main loop.",
+      "description": "A starting point for a IoC Container based project. Installs basic boot strapper that will drive a main loop.",
       "path": "Samples~/Bootstrap MainLoop"
+    },
+    {
+      "displayName": "IoCBehaviour",
+      "description": "Simple example of IoCBehaviour. A MonoBehaviour that can resolve dependencies.",
+      "path": "Samples~/IoCBehaviour"
     }
   ]
 }

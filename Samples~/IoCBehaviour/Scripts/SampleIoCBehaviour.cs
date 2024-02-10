@@ -1,4 +1,3 @@
-using de.JochenHeckl.Unity.IoCLight;
 using UnityEngine;
 
 namespace IoCLight.Samples.PropertyInjection

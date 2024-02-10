@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace de.JochenHeckl.Unity.IoCLight
+namespace IoCLight
 {
 	public static class ContainerExtensions
 	{

@@ -1,4 +1,4 @@
-using de.JochenHeckl.Unity.IoCLight;
+using IoCLight;
 using UnityEngine;
 
 namespace IoCLight.Samples.PropertyInjection
@@ -10,5 +10,4 @@ namespace IoCLight.Samples.PropertyInjection
             Container.Register<SampleImplementation>().As<ISampleInterface>();
         }
     }
-
 }

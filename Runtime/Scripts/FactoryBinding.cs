@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-using de.JochenHeckl.Unity.IoCLight;
+using IoCLight;
 
 
 public class FactoryBinding<ProductType> : ITypeBinding
