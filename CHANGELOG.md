@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Register API changed to return ITypeBinding instead of TypeBindingBase
 - Adds new way of registering: ```public ITypeBinding RegisterFactory<ProductType>( Func<IContainer, ProductType> producer )```
+- Adds IoCBehaviour which enables resolving instances from within Monobehaviours
 - Other Minor Improvements
 
 ## [1.4.0] - 2020-10-24
