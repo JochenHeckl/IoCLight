@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IoCLight
+namespace JH.IoCLight
 {
     public interface ITypeBinding
     {
@@ -8,8 +8,8 @@ namespace IoCLight
         Type LookupType { get; set; }
         Type ResolveType { get; }
 
-        object Resolve( IContainer container );
-        TypeToResolve Resolve<TypeToResolve>( IContainer container ) where TypeToResolve : class;
-
+        object Resolve(IContainer container);
+        TypeToResolve Resolve<TypeToResolve>(IContainer container)
+            where TypeToResolve : class;
     }
 }

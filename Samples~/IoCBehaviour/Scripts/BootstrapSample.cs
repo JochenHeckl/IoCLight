@@ -1,7 +1,4 @@
-using IoCLight;
-using UnityEngine;
-
-namespace IoCLight.Samples.PropertyInjection
+namespace JH.IoCLight.Samples.PropertyInjection
 {
     public class BootstrapSample : BootstrapBase
     {

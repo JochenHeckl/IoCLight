@@ -1,6 +1,4 @@
-﻿namespace IoCLight.Samples.PropertyInjection
+﻿namespace JH.IoCLight.Samples.PropertyInjection
 {
-    public class SampleImplementation : ISampleInterface
-    {
-    }
+    public class SampleImplementation : ISampleInterface { }
 }

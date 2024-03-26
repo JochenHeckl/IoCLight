@@ -6,6 +6,8 @@ namespace ReplaceMeWithYourProjectsNamespace
 {
     internal class Configuration : IConfiguration
     {
-        public float TimeScaleFactor { get; set; }
+        public string StringConfigurationValue { get; set; }
+        public int IntConfigurationValue { get; set; }
+        public float FloatConfigurationValue { get; set; }
     }
 }

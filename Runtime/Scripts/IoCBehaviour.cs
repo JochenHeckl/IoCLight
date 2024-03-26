@@ -2,8 +2,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace IoCLight
+namespace JH.IoCLight
 {
+    [AddComponentMenu( "IoCBehaviour" )]
     public class IoCBehaviour : MonoBehaviour
     {
         private IContainer container;

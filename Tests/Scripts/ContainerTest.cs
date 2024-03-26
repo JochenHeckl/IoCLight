@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace IoCLight.Test
+namespace JH.IoCLight.Test
 {
     public class ContainerTest
     {

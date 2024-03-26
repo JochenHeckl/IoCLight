@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using de.JochenHeckl.Unity.IoCLight;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ColorSwitcherBootstrap : BootstrapBase
+namespace JH.IoCLight.Samples.ColorSwitcher
 {
-    public Material material;
-
-    public override void Compose()
+    public class ColorSwitcherBootstrap : BootstrapBase
     {
-        Container.Register<ColorSwitcher>().SingleInstance();
-    }
+        public Material material;
 
-    public void Update()
-    {
-        material.color = Container.Resolve<ColorSwitcher>().MakeNextColor( Time.time );
+        public override void Compose()
+        {
+            Container.Register<ColorSwitcher>().SingleInstance();
+        }
+
+        public void Update()
+        {
+            material.color = Container.Resolve<ColorSwitcher>().MakeNextColor(Time.time);
+        }
     }
 }

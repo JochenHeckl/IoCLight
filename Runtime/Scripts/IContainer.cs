@@ -1,19 +1,21 @@
 ﻿using System;
 
-namespace IoCLight
+namespace JH.IoCLight
 {
-	public interface IContainer
+    public interface IContainer
     {
         void Terminate();
 
-		ITypeBinding Register<InstanceType>();
-        ITypeBinding RegisterInstance<InstanceType>( InstanceType instance );
+        ITypeBinding Register<InstanceType>();
+        ITypeBinding RegisterInstance<InstanceType>(InstanceType instance);
 
-        ITypeBinding RegisterFactory<ProductType>( Func<IContainer, ProductType> producer );
+        ITypeBinding RegisterFactory<ProductType>(Func<IContainer, ProductType> producer);
 
-		InstanceType Resolve<InstanceType>() where InstanceType : class;
-        InstanceType[] ResolveAll<InstanceType>() where InstanceType : class;
+        InstanceType Resolve<InstanceType>()
+            where InstanceType : class;
+        InstanceType[] ResolveAll<InstanceType>()
+            where InstanceType : class;
 
-        object Resolve( Type typeofInstanceType );
+        object Resolve(Type typeofInstanceType);
     }
 }

@@ -1,6 +1,6 @@
 {
-    "name": "de.JochenHeckl.Unity.IoCLight",
-    "rootNamespace": "IoCLight",
+    "name": "JH.IoCLight",
+    "rootNamespace": "JH.IoCLight",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

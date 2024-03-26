@@ -1,14 +1,14 @@
-﻿namespace IoCLight
+﻿namespace JH.IoCLight
 {
     public class InstanceBinding<InstanceType> : TypeBindingBase
     {
         public InstanceType boundInstance;
-        
-        public InstanceBinding( InstanceType boundInstanceIn )
+
+        public InstanceBinding(InstanceType boundInstanceIn)
         {
             boundInstance = boundInstanceIn;
 
-            LookupType = typeof( InstanceType );
+            LookupType = typeof(InstanceType);
             ResolveType = boundInstanceIn.GetType();
         }
     }

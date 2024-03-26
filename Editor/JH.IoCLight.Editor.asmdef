@@ -1,7 +1,8 @@
 {
-    "name": "de.JochenHeckl.Unity.IoCLight.Editor",
+    "name": "JH.IoCLight.Editor",
+    "rootNamespace": "JH.IoCLight.Editor",
     "references": [
-        "GUID:988fa01430d4f4948924dbb8e49c3259"
+        "GUID:d5316cfba057c7b47b383d076105ad47"
     ],
     "includePlatforms": [
         "Editor"
