@@ -18,7 +18,7 @@ namespace JH.IoCLight
             var binding = new TypeBindingBase()
             {
                 LookupType = typeof(InstanceType),
-                ResolveType = typeof(InstanceType)
+                ResolveType = typeof(InstanceType),
             };
 
             typeBindings.Add(binding);
@@ -32,7 +32,7 @@ namespace JH.IoCLight
             {
                 SingleInstance = true,
                 LookupType = typeof(InstanceType),
-                ResolveType = typeof(InstanceType)
+                ResolveType = typeof(InstanceType),
             };
 
             typeBindings.Add(binding);
@@ -45,7 +45,7 @@ namespace JH.IoCLight
             var binding = new FactoryBinding<ProductType>(producer)
             {
                 SingleInstance = false,
-                LookupType = typeof(ProductType)
+                LookupType = typeof(ProductType),
             };
 
             typeBindings.Add(binding);

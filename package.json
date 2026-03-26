@@ -1,6 +1,6 @@
 {
   "name": "jh.ioclight",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
   "unity": "2021.3",
@@ -14,8 +14,8 @@
   ],
   "author": {
     "name": "Jochen Heckl",
-    "email": "jochen.heckl@gmail.com",
-    "url": "https://www.jochen.heckl.de"
+    "url": "https://www.jochenheckl.de",
+    "email": "jochen.heckl@gmail.com"
   },
   "type": "library",
   "dependencies": {
@@ -37,5 +37,8 @@
       "description": "Simple example of IoCBehaviour. A MonoBehaviour that can resolve dependencies.",
       "path": "Samples~/IoCBehaviour"
     }
-  ]
+  ],
+  "documentationUrl": "https://github.com/JochenHeckl/IoCLight",
+  "licensesUrl": "https://github.com/JochenHeckl/IoCLight/blob/main/LICENSE.md",
+  "changelogUrl": "https://github.com/JochenHeckl/IoCLight/blob/main/CHANGELOG.md"
 }
