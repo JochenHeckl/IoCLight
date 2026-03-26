@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
-  "unity": "2021.3",
+  "unity": "2023.2",
   "keywords": [
     "SOLID",
     "IoC",
