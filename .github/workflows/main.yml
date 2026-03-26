@@ -13,6 +13,7 @@ jobs:
       matrix:
         unityVersion:
           - 6000.4.0f1
+          - 6000.3.12f1
           - 2023.2.22f1
         os:
           - ubuntu-latest
