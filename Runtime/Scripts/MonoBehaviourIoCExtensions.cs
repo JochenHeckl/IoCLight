@@ -29,7 +29,7 @@ namespace JH.IoCLight
             + "This can lead to problems if you are using more than one Bootstrapper in your scene."
         );
 
-#if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
         bootstrap = UnityEngine
           .Object.FindObjectsByType<BootstrapBase>(FindObjectsInactive.Exclude)
           .FirstOrDefault();
