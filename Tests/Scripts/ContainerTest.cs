@@ -282,7 +282,7 @@ namespace JH.IoCLight.Test
             container.Register<CircularA>().As<ICircularA>();
             container.Register<CircularB>().As<ICircularB>();
 
-            var exception = Assert.Throws<InvalidOperationException>(
+            var exception = Assert.Throws<CircularDependencyException>(
                 () => container.Resolve<ICircularA>()
             );
 
@@ -290,14 +290,14 @@ namespace JH.IoCLight.Test
         }
 
         [Test]
-        public void TestCircularDependencyFallsBackToParameterlessConstructor()
+        public void TestCircularDependencyIsNotSwallowedByConstructorFallback()
         {
             var container = new Container();
 
             container.Register<FallbackA>().As<IFallbackA>();
             container.Register<FallbackB>().As<IFallbackB>();
 
-            Assert.IsNotNull(container.Resolve<IFallbackA>());
+            Assert.Throws<CircularDependencyException>(() => container.Resolve<IFallbackA>());
         }
     }
 }

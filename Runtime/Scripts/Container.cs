@@ -68,7 +68,7 @@ namespace JH.IoCLight
             if (resolutionStack.Contains(typeBinding))
             {
                 var chain = string.Join(" -> ", resolutionStack.Select(x => x.LookupType.Name));
-                throw new InvalidOperationException(
+                throw new CircularDependencyException(
                     $"Circular dependency detected while resolving {requestedType.Name}:"
                         + $" {chain} -> {requestedType.Name}."
                 );

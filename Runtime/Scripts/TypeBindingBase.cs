@@ -45,6 +45,10 @@ namespace JH.IoCLight
                         .Select(x => container.Resolve(x.ParameterType))
                         .ToArray();
                 }
+                catch (CircularDependencyException)
+                {
+                    throw;
+                }
                 catch (InvalidOperationException exception)
                 {
                     failures.Add(exception.Message);
