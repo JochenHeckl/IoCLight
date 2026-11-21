@@ -1,6 +1,6 @@
 # IoCLight
 
-Unity package `de.jochenheckl.unity.ioclight` 3.0.0 — minimal IoC container built for il2cpp. Runtime namespace is `JH.IoCLight` (the 2.0.0 changelog entry calls it `IoCLight`). Trust `package.json` and source.
+Unity package `de.jochenheckl.unity.ioclight` 3.1.0 — minimal IoC container built for il2cpp. Runtime namespace is `JH.IoCLight` (the 2.0.0 changelog entry calls it `IoCLight`). Trust `package.json` and source.
 
 ## Structure
 - `Runtime/` — `JH.IoCLight` asmdef (no references). Entry points: `BootstrapBase`, `Container`/`IContainer`, `IoCBehaviour`, `[Inject]`, `MonoBehaviourIoCExtensions`.
