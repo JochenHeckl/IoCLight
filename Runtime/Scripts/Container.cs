@@ -7,6 +7,7 @@ namespace JH.IoCLight
     public class Container : IContainer
     {
         private readonly List<ITypeBinding> typeBindings = new List<ITypeBinding>();
+        private readonly List<ITypeBinding> resolutionStack = new List<ITypeBinding>();
 
         public Container()
         {
@@ -28,6 +29,11 @@ namespace JH.IoCLight
 
         public ITypeBinding RegisterInstance<InstanceType>(InstanceType instance)
         {
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
             var binding = new TypeBindingBase(instance)
             {
                 SingleInstance = true,
@@ -53,6 +59,32 @@ namespace JH.IoCLight
             return binding;
         }
 
+        private TResult ResolveTypeBinding<TResult>(
+            ITypeBinding typeBinding,
+            Type requestedType,
+            Func<ITypeBinding, TResult> resolve
+        )
+        {
+            if (resolutionStack.Contains(typeBinding))
+            {
+                var chain = string.Join(" -> ", resolutionStack.Select(x => x.LookupType.Name));
+                throw new InvalidOperationException(
+                    $"Circular dependency detected while resolving {requestedType.Name}:"
+                        + $" {chain} -> {requestedType.Name}."
+                );
+            }
+
+            resolutionStack.Add(typeBinding);
+            try
+            {
+                return resolve(typeBinding);
+            }
+            finally
+            {
+                resolutionStack.RemoveAt(resolutionStack.Count - 1);
+            }
+        }
+
         public InstanceType Resolve<InstanceType>()
             where InstanceType : class
         {
@@ -68,7 +100,11 @@ namespace JH.IoCLight
                 );
             }
 
-            return typeBinding.Resolve<InstanceType>(this);
+            return ResolveTypeBinding(
+                typeBinding,
+                typeof(InstanceType),
+                binding => binding.Resolve<InstanceType>(this)
+            );
         }
 
         public InstanceType[] ResolveAll<InstanceType>()
@@ -76,7 +112,13 @@ namespace JH.IoCLight
         {
             return typeBindings
                 .Where(x => typeof(InstanceType).IsAssignableFrom(x.LookupType))
-                .Select(x => x.Resolve<InstanceType>(this))
+                .Select(x =>
+                    ResolveTypeBinding(
+                        x,
+                        typeof(InstanceType),
+                        binding => binding.Resolve<InstanceType>(this)
+                    )
+                )
                 .ToArray();
         }
 
@@ -94,7 +136,11 @@ namespace JH.IoCLight
                 );
             }
 
-            return typeBinding.Resolve(this);
+            return ResolveTypeBinding(
+                typeBinding,
+                typeOfInstanceType,
+                binding => binding.Resolve(this)
+            );
         }
 
         public void Terminate()

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace JH.IoCLight.Test
@@ -66,6 +67,78 @@ namespace JH.IoCLight.Test
             public SimpleTypeWithDependency(ISimpleTypeDependency dependencyIn)
             {
                 dependency = dependencyIn;
+            }
+        }
+
+        public interface IMissingDependency
+        {
+        }
+
+        public class TypeWithFallbackConstructor : ISimpleInterface
+        {
+            public string ConstructorUsed { get; private set; }
+
+            public TypeWithFallbackConstructor(IMissingDependency missing)
+            {
+                ConstructorUsed = "with dependency";
+            }
+
+            public TypeWithFallbackConstructor()
+            {
+                ConstructorUsed = "default";
+            }
+
+            public int SimpleProperty
+            {
+                get { return 42; }
+            }
+        }
+
+        public interface ICircularA
+        {
+        }
+
+        public interface ICircularB
+        {
+        }
+
+        public class CircularA : ICircularA
+        {
+            public CircularA(ICircularB dependency)
+            {
+            }
+        }
+
+        public class CircularB : ICircularB
+        {
+            public CircularB(ICircularA dependency)
+            {
+            }
+        }
+
+        public interface IFallbackA
+        {
+        }
+
+        public interface IFallbackB
+        {
+        }
+
+        public class FallbackA : IFallbackA
+        {
+            public FallbackA(IFallbackB dependency)
+            {
+            }
+        }
+
+        public class FallbackB : IFallbackB
+        {
+            public FallbackB(IFallbackA dependency)
+            {
+            }
+
+            public FallbackB()
+            {
             }
         }
 
@@ -177,6 +250,54 @@ namespace JH.IoCLight.Test
             var second = binding.Resolve(container);
 
             Assert.AreNotSame(first, second);
+        }
+
+        [Test]
+        public void TestRegisterInstanceRejectsNull()
+        {
+            var container = new Container();
+
+            Assert.Throws<ArgumentNullException>(
+                () => container.RegisterInstance<ISimpleInterface>(null)
+            );
+        }
+
+        [Test]
+        public void TestConstructorFallsBackWhenDependencyMissing()
+        {
+            var container = new Container();
+
+            container.Register<TypeWithFallbackConstructor>().As<ISimpleInterface>();
+
+            var resolved = (TypeWithFallbackConstructor)container.Resolve<ISimpleInterface>();
+
+            Assert.AreEqual("default", resolved.ConstructorUsed);
+        }
+
+        [Test]
+        public void TestCircularDependencyThrows()
+        {
+            var container = new Container();
+
+            container.Register<CircularA>().As<ICircularA>();
+            container.Register<CircularB>().As<ICircularB>();
+
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => container.Resolve<ICircularA>()
+            );
+
+            Assert.IsTrue(exception.Message.Contains("Circular dependency"));
+        }
+
+        [Test]
+        public void TestCircularDependencyFallsBackToParameterlessConstructor()
+        {
+            var container = new Container();
+
+            container.Register<FallbackA>().As<IFallbackA>();
+            container.Register<FallbackB>().As<IFallbackB>();
+
+            Assert.IsNotNull(container.Resolve<IFallbackA>());
         }
     }
 }

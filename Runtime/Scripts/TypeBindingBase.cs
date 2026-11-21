@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JH.IoCLight
@@ -31,27 +32,40 @@ namespace JH.IoCLight
                 .OrderByDescending(x => x.GetParameters().Count())
                 .ToArray();
 
+            var failures = new List<string>();
+
             foreach (var constructor in constructors)
             {
-                var resolvedParameters = constructor
-                    .GetParameters()
-                    .Select(x => container.Resolve(x.ParameterType))
-                    .ToArray();
+                object[] resolvedParameters;
+
+                try
+                {
+                    resolvedParameters = constructor
+                        .GetParameters()
+                        .Select(x => container.Resolve(x.ParameterType))
+                        .ToArray();
+                }
+                catch (InvalidOperationException exception)
+                {
+                    failures.Add(exception.Message);
+                    continue;
+                }
+
+                var resolvedInstance = Activator.CreateInstance(ResolveType, resolvedParameters);
 
                 if (SingleInstance)
                 {
-                    instance = Activator.CreateInstance(ResolveType, resolvedParameters);
+                    instance = resolvedInstance;
+                }
 
-                    return instance;
-                }
-                else
-                {
-                    return Activator.CreateInstance(ResolveType, resolvedParameters);
-                }
+                return resolvedInstance;
             }
 
             throw new InvalidOperationException(
                 $"failed to resolve constructor for type {ResolveType.Name}."
+                    + (failures.Count > 0
+                        ? $" Resolution failures: {string.Join(" | ", failures)}"
+                        : string.Empty)
             );
         }
 
