@@ -28,9 +28,9 @@
       "path": "Samples~/ColorSwitcher"
     },
     {
-      "displayName": "Bootstrap MainLoop",
-      "description": "A starting point for a IoC Container based project. Installs basic boot strapper that will drive a main loop.",
-      "path": "Samples~/Bootstrap MainLoop"
+      "displayName": "Bootstrap Main Loop",
+      "description": "A starting point for a IoC Container based project. Installs basic bootstrapper and two systems that drive a main loop.",
+      "path": "Samples~/Bootstrap Main Loop"
     },
     {
       "displayName": "IoCBehaviour",

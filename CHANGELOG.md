@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - BREAKING: `BootstrapBase.Compose()` is now `protected` instead of `public`.
 - BREAKING: `ITypeBinding` gained a `Terminate()` method that custom bindings must implement.
 - `BootstrapBase` gained a `protected virtual Shutdown()` teardown hook. It runs before container termination, which remains unconditional in `OnDestroy()`.
+- The `Bootstrap MainLoop` sample is now `Bootstrap Main Loop`, and its `RuntimeData` tracks `SystemOneData` and `SystemTwoData` instead of simulation time.
 
 ### Added
 - `Container.Terminate()` clears cached singleton instances from every binding before clearing the binding list.
+- The `Bootstrap Main Loop` sample registers `SystemOne` and `SystemTwo` as `ISystem` implementations driven by `Start()`, `FixedUpdate()` and `Shutdown()`.
 
 ## [2.0.0] - 2024-02-10
 - Main namespace was shortened to IoCLight
