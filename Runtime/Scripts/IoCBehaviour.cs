@@ -5,19 +5,15 @@ namespace JH.IoCLight
   [AddComponentMenu(nameof(IoCBehaviour))]
   public class IoCBehaviour : MonoBehaviour
   {
-    private IContainer container;
-
     protected TypeToResolve Resolve<TypeToResolve>()
       where TypeToResolve : class
     {
-      container ??= this.FindContainer();
-      return container.Resolve<TypeToResolve>();
+      return this.FindContainer().Resolve<TypeToResolve>();
     }
 
     protected void ResolveInjectables()
     {
-      container ??= this.FindContainer();
-      this.ResolveInjectables(container);
+      this.ResolveInjectables(this.FindContainer());
     }
   }
 }

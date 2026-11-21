@@ -1,80 +1,119 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
 namespace JH.IoCLight
 {
-  public static class MonoBehaviourIoCExtensions
-  {
-    public static TypeToResolve Resolve<TypeToResolve>(this MonoBehaviour behaviour)
-      where TypeToResolve : class
+    public static class MonoBehaviourIoCExtensions
     {
-      return FindContainer(behaviour).Resolve<TypeToResolve>();
+        private static readonly Dictionary<Type, MemberInfo[]> injectableMembers =
+            new Dictionary<Type, MemberInfo[]>();
+
+        public static TypeToResolve Resolve<TypeToResolve>(this MonoBehaviour behaviour)
+            where TypeToResolve : class
+        {
+            return FindContainer(behaviour).Resolve<TypeToResolve>();
+        }
+
+        public static void ResolveInjectables(this MonoBehaviour behaviour)
+        {
+            ResolveInjectables(behaviour, FindContainer(behaviour));
+        }
+
+        public static IContainer FindContainer(this MonoBehaviour behaviour)
+        {
+            var bootstrap = behaviour.GetComponentInParent<BootstrapBase>();
+
+            if (bootstrap == null)
+            {
+                throw new InvalidOperationException(
+                    $"Failed to find an IoC container for {behaviour.name}. "
+                        + "Make sure a BootstrapBase exists on this GameObject or one of its parents."
+                );
+            }
+
+            if (bootstrap.Container == null)
+            {
+                throw new InvalidOperationException(
+                    $"The BootstrapBase for {behaviour.name} has no container. "
+                        + "Make sure its Awake() has run before resolving dependencies."
+                );
+            }
+
+            return bootstrap.Container;
+        }
+
+        public static void ResolveInjectables(this MonoBehaviour behaviour, IContainer container)
+        {
+            if (behaviour == null)
+            {
+                throw new ArgumentNullException(nameof(behaviour));
+            }
+
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
+            foreach (var injectable in GetInjectableMembers(behaviour.GetType()))
+            {
+                Inject(injectable, behaviour, container);
+            }
+        }
+
+        private static void Inject(MemberInfo member, MonoBehaviour behaviour, IContainer container)
+        {
+            if (member is PropertyInfo property)
+            {
+                property.SetValue(behaviour, container.Resolve(property.PropertyType));
+                return;
+            }
+
+            var field = (FieldInfo)member;
+            field.SetValue(behaviour, container.Resolve(field.FieldType));
+        }
+
+        private static MemberInfo[] GetInjectableMembers(Type behaviourType)
+        {
+            if (injectableMembers.TryGetValue(behaviourType, out var members))
+            {
+                return members;
+            }
+
+            members = behaviourType
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(x => x.GetCustomAttribute<InjectAttribute>() != null)
+                .Cast<MemberInfo>()
+                .Concat(
+                    behaviourType
+                        .GetFields(
+                            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+                        )
+                        .Where(x => x.GetCustomAttribute<InjectAttribute>() != null)
+                )
+                .ToArray();
+
+            foreach (var member in members)
+            {
+                if (member is PropertyInfo property && !property.CanWrite)
+                {
+                    throw new InvalidOperationException(
+                        $"[Inject] property {property.Name} on {behaviourType.Name} must be writable."
+                    );
+                }
+
+                if (member is FieldInfo field && (field.IsInitOnly || field.IsLiteral))
+                {
+                    throw new InvalidOperationException(
+                        $"[Inject] field {field.Name} on {behaviourType.Name} must not be readonly or const."
+                    );
+                }
+            }
+
+            injectableMembers.Add(behaviourType, members);
+            return members;
+        }
     }
-
-    public static void ResolveInjectables(this MonoBehaviour behaviour)
-    {
-      ResolveInjectables(behaviour, FindContainer(behaviour));
-    }
-
-    public static IContainer FindContainer(this MonoBehaviour behaviour)
-    {
-      var bootstrap = behaviour.GetComponentInParent<BootstrapBase>();
-
-      if (bootstrap == null)
-      {
-        Debug.LogWarning(
-          $"BootstrapBase not found in the ancestry of {behaviour.name}. "
-            + "This can lead to problems if you are using more than one Bootstrapper in your scene."
-        );
-
-#if UNITY_6000_4_OR_NEWER
-        bootstrap = UnityEngine
-          .Object.FindObjectsByType<BootstrapBase>(FindObjectsInactive.Exclude)
-          .FirstOrDefault();
-#else
-        bootstrap = UnityEngine
-          .Object.FindObjectsByType<BootstrapBase>(
-            FindObjectsInactive.Exclude,
-            FindObjectsSortMode.None
-          )
-          .FirstOrDefault();
-#endif // UNITY_6000_0_OR_NEWER
-      }
-
-      if (bootstrap == null)
-      {
-        throw new InvalidOperationException(
-          $"Failed to find an IoC container for {behaviour.name}. "
-            + "Make sure a BootstrapBase exists in the scene."
-        );
-      }
-
-      return bootstrap.Container;
-    }
-
-    public static void ResolveInjectables(this MonoBehaviour behaviour, IContainer container)
-    {
-      var propertiesToInject = behaviour
-        .GetType()
-        .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-        .Where(x => x.GetCustomAttribute<InjectAttribute>() != null);
-
-      foreach (var injectable in propertiesToInject)
-      {
-        injectable.SetValue(behaviour, container.Resolve(injectable.PropertyType));
-      }
-
-      var fieldsToInject = behaviour
-        .GetType()
-        .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-        .Where(x => x.GetCustomAttribute<InjectAttribute>() != null);
-
-      foreach (var injectable in fieldsToInject)
-      {
-        injectable.SetValue(behaviour, container.Resolve(injectable.FieldType));
-      }
-    }
-  }
 }

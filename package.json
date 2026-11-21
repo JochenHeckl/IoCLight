@@ -1,6 +1,6 @@
 {
   "name": "de.jochenheckl.unity.ioclight",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
   "unity": "2023.2",
@@ -19,7 +19,7 @@
   },
   "type": "library",
   "dependencies": {
-    "com.unity.test-framework": "1.4.3"
+    "com.unity.test-framework": "1.9.0"
   },
   "samples": [
     {
