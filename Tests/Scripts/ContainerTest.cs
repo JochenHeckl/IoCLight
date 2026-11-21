@@ -162,5 +162,21 @@ namespace JH.IoCLight.Test
             Assert.NotNull(product);
             Assert.NotNull(product.SimpleProperty);
         }
+
+        [Test]
+        public void TestTerminateClearsSingleInstanceCache()
+        {
+            var container = new Container();
+            var binding = container
+                .Register<SimpleType>()
+                .As<ISimpleInterface>()
+                .SingleInstance();
+
+            var first = binding.Resolve(container);
+            container.Terminate();
+            var second = binding.Resolve(container);
+
+            Assert.AreNotSame(first, second);
+        }
     }
 }

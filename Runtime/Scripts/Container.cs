@@ -99,6 +99,11 @@ namespace JH.IoCLight
 
         public void Terminate()
         {
+            foreach (var binding in typeBindings)
+            {
+                binding.Terminate();
+            }
+
             typeBindings.Clear();
         }
     }

@@ -68,5 +68,10 @@ namespace JH.IoCLight
 
             return (TypeToResolve)Resolve(container);
         }
+
+        public void Terminate()
+        {
+            instance = null;
+        }
     }
 }

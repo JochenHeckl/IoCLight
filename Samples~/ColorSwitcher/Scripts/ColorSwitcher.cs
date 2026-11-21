@@ -5,9 +5,9 @@ namespace JH.IoCLight.Samples.ColorSwitcher
 {
     internal class ColorSwitcher
     {
-        public const float redScale = 5f;
-        public const float greenScale = 7f;
-        public const float blueScale = 11f;
+        public const float redScale = 0.5f;
+        public const float greenScale = 0.7f;
+        public const float blueScale = 1.1f;
 
         internal Color MakeNextColor(float time)
         {

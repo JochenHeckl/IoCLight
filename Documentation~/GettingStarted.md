@@ -8,7 +8,7 @@ This getting started guide will assume basic knowledge of Unity 2019.3 as well a
 
 *either* manually:
 - Open *manifest.json* in a text editor. You can find the file in the *Packages* directory of your current project
-- Add the line `"de.jochenheckl.ioclight":"https://github.com/JochenHeckl/IoCLight.git"` to the "dependencies" section.
+- Add the line `"de.jochenheckl.unity.ioclight": "https://github.com/JochenHeckl/IoCLight.git"` to the "dependencies" section.
 - Save the file and return to unity
 
 *or* via UI:
@@ -31,7 +31,8 @@ This getting started guide will assume basic knowledge of Unity 2019.3 as well a
 - Create an empty GameObject and rename it Bootstrap
 - Create a new script named ExampleBootstrap.
 - Derive class ExampleBootstrap from BootstrapBase.
-- Implement the abstract base method `void Compose()`.
+- Implement the abstract base method `protected override void Compose()`.
+- Optionally override `protected virtual void Shutdown()` for teardown. The base class always terminates the container afterwards, so overrides do not need to call it.
 - Use `Container.Register()` to bootstrap your IoC Container.
 
 
@@ -69,7 +70,7 @@ public class SimpleType : ISimpleInterface
 
 public class ExampleBootstrap : BootstrapBase
 {
-    override void Compose()
+    protected override void Compose()
     {
         Container.Register<SimpleTypeDependency>().As<ISimpleTypeDependency>();
 		Container.Register<SimpleType>().As<ISimpleInterface>();
