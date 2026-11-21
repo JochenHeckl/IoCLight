@@ -8,11 +8,7 @@ namespace JH.IoCLight
 
         protected abstract void Compose();
 
-        protected virtual void Shutdown()
-        {
-            Container?.Terminate();
-            Container = null;
-        }
+        protected virtual void Shutdown() { }
 
         public virtual void Awake()
         {
@@ -24,6 +20,9 @@ namespace JH.IoCLight
         public virtual void OnDestroy()
         {
             Shutdown();
+
+            Container?.Terminate();
+            Container = null;
         }
     }
 }

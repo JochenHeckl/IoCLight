@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-11-21
+
+### Changed
+- BREAKING: package id changed from `jh.ioclight` to `de.jochenheckl.unity.ioclight`.
+- BREAKING: `BootstrapBase.Compose()` is now `protected` instead of `public`.
+- BREAKING: `ITypeBinding` gained a `Terminate()` method that custom bindings must implement.
+- `BootstrapBase` gained a `protected virtual Shutdown()` teardown hook. It runs before container termination, which remains unconditional in `OnDestroy()`.
+
+### Added
+- `Container.Terminate()` clears cached singleton instances from every binding before clearing the binding list.
+
 ## [2.0.0] - 2024-02-10
 - Main namespace was shortened to IoCLight
 - Register API changed to return ITypeBinding instead of TypeBindingBase

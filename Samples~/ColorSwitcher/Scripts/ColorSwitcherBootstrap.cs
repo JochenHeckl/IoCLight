@@ -6,7 +6,7 @@ namespace JH.IoCLight.Samples.ColorSwitcher
     {
         public Material material;
 
-        public override void Compose()
+        protected override void Compose()
         {
             Container.Register<ColorSwitcher>().SingleInstance();
         }

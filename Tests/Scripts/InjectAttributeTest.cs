@@ -118,5 +118,17 @@ namespace JH.IoCLight.Test
                 UnityEngine.Object.DestroyImmediate(go);
             }
         }
+
+        [Test]
+        public void TestShutdownOverrideDoesNotSkipTermination()
+        {
+            var bootstrap = bootstrapGO.GetComponent<TestBootstrap>();
+            var container = bootstrap.Container;
+            Assert.IsNotNull(container.Resolve<ITestService>());
+
+            bootstrap.OnDestroy();
+
+            Assert.Throws<InvalidOperationException>(() => container.Resolve<ITestService>());
+        }
     }
 }

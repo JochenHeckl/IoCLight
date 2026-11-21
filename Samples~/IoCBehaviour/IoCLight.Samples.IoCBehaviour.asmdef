@@ -2,7 +2,7 @@
     "name": "IoCLight.Samples.IoCBehaviour",
     "rootNamespace": "IoCLight.Samples.IoCBehaviour",
     "references": [
-        "GUID:d5316cfba057c7b47b383d076105ad47"
+        "JH.IoCLight"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

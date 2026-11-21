@@ -1,16 +1,16 @@
 # IoCLight
 
-Unity package `de.jochenheckl.unity.ioclight` 3.0.0 — minimal IoC container built for il2cpp. Runtime namespace is `JH.IoCLight`; docs lag behind: GettingStarted uses the old package id `de.jochenheckl.ioclight` and the changelog says the namespace became `IoCLight` in 2.0.0. Trust `package.json` and source.
+Unity package `de.jochenheckl.unity.ioclight` 3.0.0 — minimal IoC container built for il2cpp. Runtime namespace is `JH.IoCLight` (the 2.0.0 changelog entry calls it `IoCLight`). Trust `package.json` and source.
 
 ## Structure
 - `Runtime/` — `JH.IoCLight` asmdef (no references). Entry points: `BootstrapBase`, `Container`/`IContainer`, `IoCBehaviour`, `[Inject]`, `MonoBehaviourIoCExtensions`.
 - `Editor/` — `JH.IoCLight.Editor`, Editor-only; only an empty custom editor for `BootstrapBase`.
 - `Tests/` — `JH.IoCLight.Tests`, Editor-only, `UNITY_INCLUDE_TESTS`, `nunit.framework.dll`; source files use namespace `JH.IoCLight.Test` (singular).
-- `Samples~/` — three importable samples; the `~` keeps them out of Unity's import until imported. They are stale: they override `Compose()` as `public` while `BootstrapBase.Compose()` is `protected`, so they will not compile as-is.
+- `Samples~/` — three importable samples; the `~` keeps them out of Unity's import until imported. They use `protected override void Compose()` and reference the runtime assembly by name in their asmdef.
 - `.meta` files are committed alongside every asset; don't hand-edit them.
 
 ## Behaviour not inferable from names
-- `BootstrapBase` creates the container in `Awake()`, calls `protected Compose()` there, and terminates it from `OnDestroy()` via virtual `Shutdown()` (override it to opt out).
+- `BootstrapBase` creates the container in `Awake()`, calls `protected Compose()` there, then calls virtual `Shutdown()` from `OnDestroy()` and always terminates the container afterwards — overrides cannot opt out of termination.
 - `Container` registers itself as `IContainer` in its constructor.
 - Bindings: `Register<T>()`, `RegisterInstance(x)`, `RegisterFactory(c => ...)`, then fluent `.As<I>()` / `.SingleInstance()`. `.As<I>()` changes only the lookup type and throws if `I` is not assignable from the resolved type.
 - `Resolve<T>()` returns the FIRST registered match; `ResolveAll<T>()` returns every match — registration order is significant.

@@ -7,7 +7,7 @@ namespace ReplaceMeWithYourProjectsNamespace
     {
         public TextAsset configuration;
 
-        public override void Compose()
+        protected override void Compose()
         {
             Container.RegisterInstance(ParseConfiguration(configuration.text)).As<IConfiguration>();
             Container.Register<RuntimeData>().As<IRuntimeData>().SingleInstance();
