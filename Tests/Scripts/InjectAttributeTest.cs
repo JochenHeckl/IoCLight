@@ -46,6 +46,22 @@ namespace JH.IoCLight.Test
             public void Inject() => ResolveInjectables();
         }
 
+        private class BehaviourWithReadOnlyProperty : IoCBehaviour
+        {
+            [Inject]
+            public ITestService Service { get { return null; } }
+
+            public void Inject() => ResolveInjectables();
+        }
+
+        private class BehaviourWithReadOnlyField : IoCBehaviour
+        {
+            [Inject]
+            private readonly ITestService service = null;
+
+            public void Inject() => ResolveInjectables();
+        }
+
         private GameObject bootstrapGO;
 
         [SetUp]
@@ -129,6 +145,102 @@ namespace JH.IoCLight.Test
             bootstrap.OnDestroy();
 
             Assert.Throws<InvalidOperationException>(() => container.Resolve<ITestService>());
+        }
+
+        [Test]
+        public void TestFindContainerRequiresBootstrapInAncestry()
+        {
+            var orphanGO = new GameObject("Orphan");
+            try
+            {
+                var behaviour = orphanGO.AddComponent<BehaviourWithPropertyInjection>();
+
+                var exception = Assert.Throws<InvalidOperationException>(() => behaviour.Inject());
+
+                Assert.IsTrue(exception.Message.Contains("BootstrapBase exists"));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(orphanGO);
+            }
+        }
+
+        [Test]
+        public void TestFindContainerRequiresAwakeBootstrap()
+        {
+            var bootstrapGO = new GameObject("BootstrapWithoutAwake");
+            var behaviourGO = new GameObject("Behaviour");
+            try
+            {
+                behaviourGO.transform.SetParent(bootstrapGO.transform);
+                bootstrapGO.AddComponent<TestBootstrap>();
+                var behaviour = behaviourGO.AddComponent<BehaviourWithPropertyInjection>();
+
+                var exception = Assert.Throws<InvalidOperationException>(() => behaviour.Inject());
+
+                Assert.IsTrue(exception.Message.Contains("Awake() has run"));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(behaviourGO);
+                UnityEngine.Object.DestroyImmediate(bootstrapGO);
+            }
+        }
+
+        [Test]
+        public void TestResolveInjectablesUsesCurrentContainer()
+        {
+            var firstBootstrapGO = new GameObject("BootstrapOne");
+            firstBootstrapGO.AddComponent<TestBootstrap>().Awake();
+            var behaviourGO = new GameObject("Behaviour");
+            try
+            {
+                behaviourGO.transform.SetParent(firstBootstrapGO.transform);
+                var behaviour = behaviourGO.AddComponent<BehaviourWithPropertyInjection>();
+                behaviour.Inject();
+
+                firstBootstrapGO.GetComponent<TestBootstrap>().OnDestroy();
+                behaviourGO.transform.SetParent(null);
+
+                var secondBootstrapGO = new GameObject("BootstrapTwo");
+                try
+                {
+                    secondBootstrapGO.AddComponent<TestBootstrap>().Awake();
+                    behaviourGO.transform.SetParent(secondBootstrapGO.transform);
+
+                    Assert.DoesNotThrow(() => behaviour.Inject());
+                    Assert.IsNotNull(behaviour.Service);
+                }
+                finally
+                {
+                    UnityEngine.Object.DestroyImmediate(secondBootstrapGO);
+                }
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(behaviourGO);
+                UnityEngine.Object.DestroyImmediate(firstBootstrapGO);
+            }
+        }
+
+        [Test]
+        public void TestReadOnlyInjectTargetsAreRejected()
+        {
+            var behaviour = CreateChildBehaviour<BehaviourWithReadOnlyProperty>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => behaviour.Inject());
+
+            Assert.IsTrue(exception.Message.Contains("must be writable"));
+        }
+
+        [Test]
+        public void TestReadOnlyInjectFieldIsRejected()
+        {
+            var behaviour = CreateChildBehaviour<BehaviourWithReadOnlyField>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => behaviour.Inject());
+
+            Assert.IsTrue(exception.Message.Contains("must not be readonly or const"));
         }
     }
 }

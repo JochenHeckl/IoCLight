@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-11-21
+
+### Added
+- `CircularDependencyException` for dependency cycles. A cycle is a hard failure and is never treated as a failed constructor candidate.
+- Failed constructor candidates contribute their messages to the final resolution error.
+- Injectable members are discovered once per behaviour type and validated: `[Inject]` properties must be writable, fields must not be readonly or const.
+- `FindContainer()` reports a distinct error when a bootstrap exists but its `Awake()` has not run.
+
+### Changed
+- `RegisterInstance(null)` and `RegisterFactory(null)` throw `ArgumentNullException`.
+- Constructor injection tries the next constructor when a dependency cannot be resolved, instead of failing immediately.
+- `Container.Terminate()` terminates bindings in reverse registration order and clears the resolution stack.
+- `BootstrapBase.OnDestroy()` does nothing without a container and always terminates it, even if `Shutdown()` throws.
+- `FindContainer()` requires a `BootstrapBase` on the same GameObject or an ancestor; the scene-wide fallback was removed.
+- `IoCBehaviour` no longer caches the container, so re-parenting or replacing a bootstrap is picked up on the next resolve.
+- Factory bindings call their producer directly with the container instead of invoking it through reflection.
+
+### Removed
+- Unused `InstanceBinding<T>` and the empty `BootstrapBaseEditor` custom editor.
+
 ## [3.0.0] - 2026-11-21
 
 ### Changed

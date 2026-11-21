@@ -237,6 +237,56 @@ namespace JH.IoCLight.Test
         }
 
         [Test]
+        public void TestRegisterFactoryRejectsNullProducer()
+        {
+            var container = new Container();
+
+            Assert.Throws<ArgumentNullException>(
+                () => container.RegisterFactory<ASimpleContainerType>(null)
+            );
+        }
+
+        [Test]
+        public void TestFactoryProducerReceivesContainer()
+        {
+            var container = new Container();
+            container.Register<SimpleType>().As<ISimpleInterface>();
+
+            IContainer receivedContainer = null;
+            container.RegisterFactory(c =>
+            {
+                receivedContainer = c;
+                return new ASimpleContainerType()
+                {
+                    SimpleProperty = c.Resolve<ISimpleInterface>()
+                };
+            });
+
+            var product = container.Resolve<ASimpleContainerType>();
+
+            Assert.AreSame(container, receivedContainer);
+            Assert.NotNull(product.SimpleProperty);
+        }
+
+        [Test]
+        public void TestSingleInstanceFactoryProducesOnce()
+        {
+            var container = new Container();
+            var callCount = 0;
+
+            container.RegisterFactory(c =>
+            {
+                callCount++;
+                return new ASimpleContainerType();
+            }).SingleInstance();
+
+            container.Resolve<ASimpleContainerType>();
+            container.Resolve<ASimpleContainerType>();
+
+            Assert.AreEqual(1, callCount);
+        }
+
+        [Test]
         public void TestTerminateClearsSingleInstanceCache()
         {
             var container = new Container();

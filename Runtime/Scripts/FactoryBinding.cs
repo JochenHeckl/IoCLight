@@ -1,16 +1,19 @@
 using System;
-using System.Linq;
-using System.Reflection;
 
 namespace JH.IoCLight
 {
     public class FactoryBinding<ProductType> : ITypeBinding
     {
-        Func<IContainer, ProductType> producer;
+        private readonly Func<IContainer, ProductType> producer;
         private ProductType instance;
 
         public FactoryBinding(Func<IContainer, ProductType> producer)
         {
+            if (producer == null)
+            {
+                throw new ArgumentNullException(nameof(producer));
+            }
+
             this.producer = producer;
         }
 
@@ -25,21 +28,7 @@ namespace JH.IoCLight
                 return instance;
             }
 
-            var methodInfo = producer.GetMethodInfo();
-
-            if (!typeof(ProductType).IsAssignableFrom(methodInfo.ReturnType))
-            {
-                throw new InvalidOperationException(
-                    $"Invalid producer supplied to factory binding. {typeof(ProductType).Name} can not be assigned from {methodInfo.ReturnType.Name}."
-                );
-            }
-
-            var resolvedParameters = methodInfo
-                .GetParameters()
-                .Select(x => container.Resolve(x.ParameterType))
-                .ToArray();
-
-            var product = (ProductType)producer.DynamicInvoke(resolvedParameters);
+            var product = producer(container);
 
             if (SingleInstance)
             {

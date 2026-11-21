@@ -87,3 +87,21 @@ public class ExampleBootstrap : BootstrapBase
     }
 }
 ```
+
+## Injecting Dependencies Into MonoBehaviours
+
+Derive from `IoCBehaviour`, annotate fields or properties with `[Inject]`, and call `ResolveInjectables()` from `Start()`:
+
+```cs
+public class ExampleBehaviour : IoCBehaviour
+{
+    [Inject] private ISimpleInterface simple;
+
+    private void Start()
+    {
+        ResolveInjectables();
+    }
+}
+```
+
+`FindContainer()` looks for a `BootstrapBase` on the same GameObject or one of its parents; there is deliberately no scene-wide fallback. The bootstrap's `Awake()` must have run before resolving. `[Inject]` properties must be writable and fields must not be readonly or const.
