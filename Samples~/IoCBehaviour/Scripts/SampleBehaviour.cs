@@ -1,23 +1,23 @@
 using UnityEngine;
 
-namespace JH.IoCLight.Samples.PropertyInjection
+namespace IoCLight.Samples.IoCBehaviour
 {
-    public class SampleBehaviour : IoCBehaviour
+  public class SampleBehaviour : IoCBehaviour
+  {
+    private ISampleInterface Dependency { get; set; }
+
+    private void Start()
     {
-        private ISampleInterface Dependency { get; set; }
+      Dependency = Resolve<ISampleInterface>();
 
-        private void Start()
-        {
-            Dependency = Resolve<ISampleInterface>();
-
-            if (Dependency != null)
-            {
-                Debug.Log("Dependency was resolved successfully.");
-            }
-            else
-            {
-                Debug.LogError("Dependency was NOT resolved successfully.");
-            }
-        }
+      if (Dependency != null)
+      {
+        Debug.Log("Dependency was resolved successfully.");
+      }
+      else
+      {
+        Debug.LogError("Dependency was NOT resolved successfully.");
+      }
     }
+  }
 }

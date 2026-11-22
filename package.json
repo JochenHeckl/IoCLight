@@ -1,6 +1,6 @@
 {
   "name": "de.jochenheckl.unity.ioclight",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "displayName": "IoCLight",
   "description": "A minimal IoC container. Designed to work with il2cpp.",
   "unity": "2023.2",

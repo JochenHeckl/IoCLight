@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-This getting started guide will assume basic knowledge of Unity 2019.3 as well as basic understanding of the Inversion of Control principle.
+This getting started guide will assume basic knowledge of Unity 2023.2 as well as basic understanding of the Inversion of Control principle.
 
 ## Add A Reference to IoCLight
 

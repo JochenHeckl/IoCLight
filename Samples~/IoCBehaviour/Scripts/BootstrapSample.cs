@@ -1,10 +1,10 @@
-namespace JH.IoCLight.Samples.PropertyInjection
+namespace IoCLight.Samples.IoCBehaviour
 {
-    public class BootstrapSample : BootstrapBase
+  public class BootstrapSample : BootstrapBase
+  {
+    protected override void Compose()
     {
-        protected override void Compose()
-        {
-            Container.Register<SampleImplementation>().As<ISampleInterface>();
-        }
+      Container.Register<SampleImplementation>().As<ISampleInterface>();
     }
+  }
 }
