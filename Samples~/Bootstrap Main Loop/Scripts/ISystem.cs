@@ -1,13 +1,13 @@
 namespace ReplaceMeWithYourProjectsNamespace
 {
-    internal interface ISystem
-    {
-        bool Autostart { get; }
+  internal interface ISystem
+  {
+    bool Autostart { get; }
 
-        void Start();
+    void Start();
 
-        void Stop();
+    void Stop();
 
-        void Update();
-    }
+    void Update();
+  }
 }

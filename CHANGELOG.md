@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-11-22
+
+### Added
+- `ResolutionFailedException` for unregistered types. It derives from `InvalidOperationException`, so existing catch blocks still match.
+
+### Changed
+- Constructor injection falls back to the next constructor only when a dependency is not registered (`ResolutionFailedException`). Exceptions thrown by factories or other user code now propagate instead of being treated as a failed candidate.
+- Singleton factory products are cached even when they are `null`.
+
+### Fixed
+- Value-type factories (for example `RegisterFactory<int>`) return the produced value instead of `default`.
+- `Container.Terminate()` terminates bindings in reverse registration order and clears the resolution stack, as documented for 3.1.0.
+- `BootstrapBase.OnDestroy()` terminates the container even when `Shutdown()` throws. It does nothing without a container.
+- `[Inject]` members declared on base classes of an `IoCBehaviour` are injected.
+
 ## [3.1.0] - 2026-11-21
 
 ### Added
